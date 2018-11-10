@@ -2,7 +2,13 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
+//#include <SFML/OpenGL.hpp>
+
+#include "SETTINGS.h"
+
+class Renderer;
+class Simulation;
+class Camera;
 
 class Application
 {
@@ -19,13 +25,22 @@ public:
 	bool Update(float frameTime);
 	bool SimulationStep(float t, float dt);
 
-	bool CheckEvents(float dt);
-	bool CheckInputs(float dt);
-	bool Render();
+	bool Render(float alpha);
+
 
 protected:
 
+	bool CheckEvents(float dt);
+	bool CheckInputs(float dt);
+
 	sf::RenderWindow* window_;
-	sf::CircleShape* shape_;
+	//sf::CircleShape* shape_;
+
+	Renderer* renderer_;
+	Simulation* simulation_;
+	Camera* camera_;
+
+	bool keyPressed_;
+	bool createdBody_;
 };
 

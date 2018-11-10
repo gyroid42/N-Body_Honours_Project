@@ -1,29 +1,55 @@
 #include "Body.h"
 
 #include "PhysicsUtil.h"
+#include "Renderer.h"
 
 
-Body::Body()
+Body::Body() :
+	force_(0.0f, 0.0f),
+	mass_(1.0f),
+	sprite_(nullptr)
 {
 }
 
 
 Body::~Body()
 {
+
+	if (sprite_) {
+
+		delete sprite_;
+		sprite_ = nullptr;
+	}
 }
 
 
-void Body::Init(sf::Vector2<double> newPos, sf::Vector2<double> newVel, double newMass) {
+void Body::Init(sf::Vector2<float> newPos, sf::Vector2<float> newVel, float newMass) {
 
 	
 	mass_ = newMass;
 	ResetForce();
 
+	currentState_.position_ = newPos;
+	currentState_.velocity_ = newVel;
+
+	prevState_.position_ = newPos;
+	prevState_.velocity_ = newVel;
+
+	sprite_ = new sf::CircleShape(20.0f);// sqrt(mass_ / PhysicsUtil::pi));
+	sprite_->setOrigin(sf::Vector2f(sprite_->getRadius(), sprite_->getRadius()));
+	//sprite_->setScale(0.1f, 0.1f);
+
+}
+
+
+void Body::SetColour(sf::Color newColor) {
+
+	sprite_->setFillColor(newColor);
 }
 
 
 
-void Body::AddForce(sf::Vector2<double> newForce) {
+void Body::AddForce(sf::Vector2<float> newForce) {
 
 	force_ += newForce;
 }
@@ -36,7 +62,7 @@ void Body::ResetForce() {
 }
 
 
-void Body::Integrate_SemiImplicitEuler(double dt) {
+void Body::Integrate_SemiImplicitEuler(float dt) {
 
 	prevState_ = currentState_;
 
@@ -45,8 +71,17 @@ void Body::Integrate_SemiImplicitEuler(double dt) {
 }
 
 
-State Body::InterpolateState(double alpha) {
+State Body::InterpolateState(float alpha) {
 
-	return (currentState_ * alpha) + (prevState_ * (1.0 - alpha));
+	return (currentState_ * alpha) + (prevState_ * (1.0f - alpha));
+}
+
+
+void Body::Draw(Renderer* renderer, float alpha) {
+
+	State spriteState = InterpolateState(alpha);
+	sprite_->setPosition(spriteState.position_);
+
+	renderer->Draw(*sprite_);
 }
 

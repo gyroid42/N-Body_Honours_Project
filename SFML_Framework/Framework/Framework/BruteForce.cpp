@@ -12,28 +12,19 @@ BruteForce::~BruteForce()
 }
 
 
-void BruteForce::Init(int numBodies) {
 
-
-	// Create the bodies
-
-
-
-}
-
-
-void BruteForce::TimeStep(double dt) {
+void BruteForce::TimeStep(float dt) {
 
 
 	// Evaluate each body against each other body
 	for (auto i = bodies_.begin(); i != bodies_.end(); i++) {
 
 		(*i)->ResetForce();
-		for (auto j = i; j != bodies_.end(); j++) {
+		for (auto j = bodies_.begin(); j != bodies_.end(); j++) {
 
 			if (i != j) {
 
-				PhysicsUtil::AddForcesBetweenBodies(*i, *j);
+				PhysicsUtil::AddForcesBetween(*i, *j);
 				//(*i)->AddForce(*j);
 			}
 		}

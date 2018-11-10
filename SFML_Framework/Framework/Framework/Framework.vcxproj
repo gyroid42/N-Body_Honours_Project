@@ -162,16 +162,23 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="BruteForce.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PhysicsUtil.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Body.h" />
     <ClInclude Include="BruteForce.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="PhysicsUtil.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="SETTINGS.h" />
+    <ClInclude Include="Simulation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

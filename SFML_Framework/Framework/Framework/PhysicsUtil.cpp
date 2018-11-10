@@ -14,23 +14,28 @@ PhysicsUtil::~PhysicsUtil()
 }
 
 
-double PhysicsUtil::DistanceToSqr(const sf::Vector2<double>& pos1, const sf::Vector2<double>& pos2) {
+float PhysicsUtil::DistanceToSqr(const sf::Vector2<float>& pos1, const sf::Vector2<float>& pos2) {
 
-	double dX = pos1.x - pos2.x;
-	double dY = pos1.y - pos2.y;
+	float dX = pos1.x - pos2.x;
+	float dY = pos1.y - pos2.y;
 
 	return dX*dX + dY*dY;
 }
 
+float PhysicsUtil::VectorLengthSqr(const sf::Vector2f& vector) {
 
-sf::Vector2<double> PhysicsUtil::VectorBetween(const sf::Vector2<double>& pos1, const sf::Vector2<double>& pos2) {
+	return vector.x * vector.x + vector.y*vector.y;
+}
+
+
+sf::Vector2<float> PhysicsUtil::VectorBetween(const sf::Vector2<float>& pos1, const sf::Vector2<float>& pos2) {
 
 	return pos1 - pos2;
 }
 
-double PhysicsUtil::Normalise(sf::Vector2<double>& vector) {
+float PhysicsUtil::Normalise(sf::Vector2<float>& vector) {
 
-	double distance = sqrt(vector.x * vector.x + vector.y * vector.y);
+	float distance = sqrt(vector.x * vector.x + vector.y * vector.y);
 
 	vector = vector / distance;
 
@@ -38,17 +43,20 @@ double PhysicsUtil::Normalise(sf::Vector2<double>& vector) {
 }
 
 
-void PhysicsUtil::AddForcesBetweenBodies(Body* body1, Body* body2) {
+void PhysicsUtil::AddForcesBetween(Body* body1, Body* body2) {
 
 
-	sf::Vector2<double> distanceVector = PhysicsUtil::VectorBetween(body1->CurrentState().position_, body2->CurrentState().position_);
-	double distance = PhysicsUtil::Normalise(distanceVector);
+	sf::Vector2<float> distanceVector = PhysicsUtil::VectorBetween(body1->CurrentState().position_, body2->CurrentState().position_);
+	float distance = PhysicsUtil::Normalise(distanceVector);
+	distance += dampeningFactor;
 
-	sf::Vector2<double> force = (PhysicsUtil::G * body1->Mass() * body2->Mass() / (distance * distance * distance)) * distanceVector;
+	sf::Vector2<float> force = (PhysicsUtil::G * body1->Mass() * body2->Mass() / (distance * distance * distance)) * distanceVector;
 
-	body1->AddForce(force);
-	body2->AddForce(-force);
+	body1->AddForce(-force);
+	//body2->AddForce(force);
 }
 
 
-const double PhysicsUtil::G = 6.673E-11;
+const float PhysicsUtil::G = 6.673E-11f;
+const float PhysicsUtil::pi = 3.14159f;
+const float PhysicsUtil::dampeningFactor = DAMPENING_FACTOR;

@@ -3,20 +3,16 @@
 #include <list>
 #include "Body.h"
 #include "PhysicsUtil.h"
+#include "Simulation.h"
 
-class BruteForce
+class BruteForce :
+	public Simulation
 {
 public:
 	BruteForce();
 	~BruteForce();
 
-	void Init(int numBodies);
-
-	void TimeStep(double dt);
-
-private:
-
-	std::list<Body*> bodies_;
+	void TimeStep(float dt);
 
 };
 
