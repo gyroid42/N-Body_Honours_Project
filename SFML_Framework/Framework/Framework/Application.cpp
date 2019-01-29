@@ -29,7 +29,7 @@ bool Application::Init() {
 	window_->setVerticalSyncEnabled(true);
 
 	window_->setActive(true);
-	window_->setActive(false);
+	//window_->setActive(false);
 
 	renderer_ = new Renderer();
 	renderer_->Init(window_);
@@ -146,11 +146,11 @@ bool Application::CheckEvents(float dt) {
 		else if (event.type == sf::Event::Resized) {
 
 			//window_->setSize(sf::Vector2u(event.size.width, event.size.height));
-			sf::View newView = window_->getView();
-			newView.setSize((float)event.size.width, (float)event.size.height);
-			window_->setView(newView);
+			//sf::View newView = window_->getView();
+			//newView.setSize((float)event.size.width, (float)event.size.height);
+			//window_->setView(newView);
 
-			//glViewport(0, 0, event.size.width, event.size.height);
+			glViewport(0, 0, event.size.width, event.size.height);
 		}
 
 		if (!createdBody_) {
@@ -228,6 +228,8 @@ bool Application::Render(float alpha) {
 	//window_->setActive(false);
 
 	simulation_->Render(renderer_, alpha);
+
+	glutSolidSphere(1.0, 20, 20);
 
 
 	renderer_->EndRender();

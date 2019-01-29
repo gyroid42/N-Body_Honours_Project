@@ -3,6 +3,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 //#include <SFML/OpenGL.hpp>
+#include <Windows.h>
+#include <GL\glew.h>
+#include <GL\freeglut.h>
 
 #include "SETTINGS.h"
 

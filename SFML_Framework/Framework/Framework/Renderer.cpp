@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include <GL\freeglut.h>
+
 
 Renderer::Renderer() :
 	window_(nullptr)
@@ -32,8 +34,8 @@ void Renderer::StartRender(bool clear) {
 
 	if (clear) {
 
-		window_->clear();
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//window_->clear();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	//glMatrixMode(GL_MODELVIEW);
